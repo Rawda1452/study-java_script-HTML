@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .task-section {
+            margin-bottom: 20px;
+        }
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .task-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .task-list li.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Section for adding tasks -->
+        <div class="task-section">
+            <h2>Add Task</h2>
+            <input type="text" id="taskInput" placeholder="Enter your task here" />
+            <button class="button" onclick="addTask()">Add Task</button>
+        </div>
+
+        <!-- Section for tasks to be completed -->
+        <div class="task-section">
+            <h2>Tasks to Complete</h2>
+            <ul id="taskList" class="task-list"></ul>
+        </div>
+
+        <!-- Section for completed tasks -->
+        <div class="task-section">
+            <h2>Completed Tasks</h2>
+            <ul id="completedList" class="task-list"></ul>
+        </div>
+    </div>
+
+    <script>
+function addTask() {
+    const taskInput = document.getElementById('taskInput');
+    const taskText = taskInput.value.trim();
+
+    if (!taskText) return;
+
+    const taskList = document.getElementById('taskList');
+    const taskItem = document.createElement('li');
+    taskItem.textContent = taskText;
+
+    taskItem.addEventListener('click', function() {
+        taskList.removeChild(taskItem);
+        const completedList = document.getElementById('completedList');
+        taskItem.classList.add('completed');
+        completedList.appendChild(taskItem);
+
+        taskItem.removeEventListener('click', arguments.callee);
+    });
+    taskList.appendChild(taskItem);
+    taskInput.value = '';
+}
+    </script>
+</body>
+</html>
